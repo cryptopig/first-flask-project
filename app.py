@@ -29,6 +29,10 @@ def hello():
 def about():
     return render_template('about.html', title = 'About')
 
+@app.route("/login")
+def login():
+    return 
+
 if '__name__' == '__main__':
     app.run(debug=True)
     print("Running application. ")
