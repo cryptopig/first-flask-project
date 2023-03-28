@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, flash, url_for, redirect
 app = Flask(__name__)
 from forms import RegistrationForm, LoginForm
 
@@ -24,7 +24,7 @@ posts = [
 # defines what a certain webpage will display
 @app.route("/")
 @app.route("/home")
-def hello():
+def home():
     return render_template('home.html', posts = posts)
 
 # about page
@@ -32,16 +32,19 @@ def hello():
 def about():
     return render_template('about.html', title = 'About')
 
-@app.route("/register")
+@app.route("/register", methods = ['GET', 'POST'])
 def register():
-    form = RegistrationForm
-    return render_template(register.html, title = 'Registration', form = form)
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        flash(f'Account created! Thanks for signing up, {form.username.data}!', 'success')
+        return redirect(url_for('home'))
+    return render_template('register.html', title = 'Registration', form = form)
 
 
 @app.route("/login")
 def login():
-    form = LoginForm
-    return render_template(login.html, title = 'Log In', form = form)
+    form = LoginForm()
+    return render_template('login.html', title = 'Log In', form = form)
 
 if '__name__' == '__main__':
     app.run(debug=True)
