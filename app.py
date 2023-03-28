@@ -2,7 +2,13 @@ from flask import Flask, render_template, flash, url_for, redirect
 app = Flask(__name__)
 from forms import RegistrationForm, LoginForm
 
-app.config["SECRET_KEY"] = f'ab9c32a070313d1343395f1cc4d5a669'
+from flask_sqlalchemy import SQLAlchemy
+
+
+app.config["SECRET_KEY"] = 'ab9c32a070313d1343395f1cc4d5a669'
+app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///site.db'
+
+db = SQLAlchemy(app)
 
 # list of dicts
 posts = [
@@ -41,7 +47,7 @@ def register():
     return render_template('register.html', title = 'Registration', form = form)
 
 
-@app.route("/login", methods = ['GET', 'POST'])
+@app.route("/login", methods = ['GET', 'POST  '])
 def login():
     form = LoginForm()
     if form.validate_on_submit:
