@@ -1,5 +1,8 @@
 from flask import Flask, render_template
 app = Flask(__name__)
+from forms import RegistrationForm, LoginForm
+
+app.config["SECRET_KEY"] = f'ab9c32a070313d1343395f1cc4d5a669'
 
 # list of dicts
 posts = [
@@ -29,9 +32,16 @@ def hello():
 def about():
     return render_template('about.html', title = 'About')
 
+@app.route("/register")
+def register():
+    form = RegistrationForm
+    return render_template(register.html, title = 'Registration', form = form)
+
+
 @app.route("/login")
 def login():
-    return 
+    form = LoginForm
+    return render_template(login.html, title = 'Log In', form = form)
 
 if '__name__' == '__main__':
     app.run(debug=True)
