@@ -1,5 +1,6 @@
-from datetime import datetime
 from flask import Flask, render_template, flash, url_for, redirect
+from datetime import datetime
+
 app = Flask(__name__)
 from forms import RegistrationForm, LoginForm
 
