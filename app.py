@@ -8,7 +8,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 
 app.config["SECRET_KEY"] = 'ab9c32a070313d1343395f1cc4d5a669'
-app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///site.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
 
 db = SQLAlchemy(app)
 
@@ -19,7 +19,7 @@ class User(db.Model):
     email = db.Column(db.String(120), unique = True, nullable = False)
     image_file = db.Column(db.String(20), nullable = False, default = 'default')
     password = db.Column(db.String(60), nullable = False)
-    posts = db.relationship('Posts', backref = 'author', lazy = True)
+    posts = db.relationship('Post', backref = 'author', lazy = True)
     # backref allows program basically adds an author attribute
     # lazy = True means that SQLAlchemy will load all data at once, so the post attribute can get all posts created by a user at once
 
@@ -77,7 +77,7 @@ def register():
     return render_template('register.html', title = 'Registration', form = form)
 
 
-@app.route("/login", methods = ['GET', 'POST  '])
+@app.route("/login", methods = ['GET', 'POST'])
 def login():
     form = LoginForm()
     if form.validate_on_submit:
