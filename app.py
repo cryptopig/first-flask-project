@@ -40,6 +40,7 @@ class Post(db.Model):
 
 
 
+
 # list of dicts
 posts = [
     {
@@ -72,7 +73,11 @@ def about():
 def register():
     form = RegistrationForm()
     if form.validate_on_submit():
+        user = User(form.username.data, email = form.email.data, password = form.password.data)
         flash(f'Account created! Thanks for signing up, {form.username.data}!', 'success')
+        db.session.add(user)
+        db.session.commit()
+        
         return redirect(url_for('home'))
     return render_template('register.html', title = 'Registration', form = form)
 
